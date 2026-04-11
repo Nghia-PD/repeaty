@@ -4,7 +4,13 @@ public static class UserPublicEndpoints
     {
         var group = app.MapGroup("/user-public-profile");
 
-        // Get /user-public-profile
-        group.MapGet("/", async () => await PublicUserProfileHandler.GetPublicUserProfileById());
+
+        // user-public-profile
+
+        var PublicUserProfileService = new PublicUserProfileService();
+        var PublicUserProfileHandler = new PublicUserProfileHandler(PublicUserProfileService);
+        // GET by id
+        group.MapGet("/", async (HttpRequest req) => await PublicUserProfileHandler.GetById(req));
+
     }
 }
