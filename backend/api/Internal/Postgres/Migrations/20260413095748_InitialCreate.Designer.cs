@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace api.Internal.Postgres.Migrations
 {
     [DbContext(typeof(RepeatyPostgresDbContext))]
-    [Migration("20260409051333_InitialCreate")]
+    [Migration("20260413095748_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,24 +27,30 @@ namespace api.Internal.Postgres.Migrations
             modelBuilder.Entity("PublicUserProfile", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("id");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int>("Streak")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("streak");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("username");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_public_user_profiles");
 
-                    b.ToTable("PublicUserProfiles");
+                    b.ToTable("public_user_profiles", (string)null);
                 });
 #pragma warning restore 612, 618
         }

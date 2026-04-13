@@ -1,9 +1,7 @@
-internal class PublicUserProfileService
+internal class PublicUserProfileService(RepeatyPostgresDbContext db)
 {
-    internal PublicUserProfileService()
+    internal async Task<PublicUserProfile?> GetPublicUserProfileById(string id)
     {
-
+        return await db.PublicUserProfiles.FindAsync(id);
     }
-
-
 }

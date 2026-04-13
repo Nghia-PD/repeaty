@@ -1,17 +1,13 @@
-internal class PublicUserProfileHandler
+internal static class PublicUserProfileHandler
 {
-    PublicUserProfileService service;
-    internal PublicUserProfileHandler(PublicUserProfileService service)
-    {
-        this.service = service;
-    }
 
-    internal async Task<IResult> GetById(HttpRequest req)
+    internal static async Task<IResult> GetById(string id, HttpRequest req, PublicUserProfileService service)
     {
         try
         {
-            var data = await Json.Read<PublicUserProfileReqInterface>(req);
-
+            var data = await Json.Read<PublicUserProfileReq>(req);
+            var result = await service.GetPublicUserProfileById(id);
+            //return result is null ? Results.NotFound() : Results.Ok(result);
             var resData = new
             {
                 data

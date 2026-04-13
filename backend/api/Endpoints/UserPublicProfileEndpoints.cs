@@ -7,10 +7,8 @@ public static class UserPublicEndpoints
 
         // user-public-profile
 
-        var PublicUserProfileService = new PublicUserProfileService();
-        var PublicUserProfileHandler = new PublicUserProfileHandler(PublicUserProfileService);
         // GET by id
-        group.MapGet("/", async (HttpRequest req) => await PublicUserProfileHandler.GetById(req));
+        group.MapGet("/{id}", PublicUserProfileHandler.GetById);
 
     }
 }
