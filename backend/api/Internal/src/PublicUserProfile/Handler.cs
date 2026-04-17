@@ -5,7 +5,7 @@ internal static class PublicUserProfileHandler
     {
         try
         {
-            var data = await Json.Read<PublicUserProfileReq>(req);
+            var data = await Json.Read<GetPublicUserProfileDto>(req);
             var result = await service.GetPublicUserProfileById(id);
             //return result is null ? Results.NotFound() : Results.Ok(result);
             var resData = new
@@ -14,7 +14,7 @@ internal static class PublicUserProfileHandler
             };
             return Json.Response(200, data);
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             var data = new
             {

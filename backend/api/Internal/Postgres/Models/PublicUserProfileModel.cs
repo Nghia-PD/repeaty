@@ -1,10 +1,14 @@
 
 
+using System.ComponentModel.DataAnnotations;
+
 public class PublicUserProfile
 {
-    public required string Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
     public required string Username { get; set; }
-    public required int Streak { get; set; }
-    public required DateTimeOffset CreatedAt { get; set; }
-    public required DateTimeOffset UpdatedAt { get; set; }
+    public int Streak { get; set; } = 0;
+
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 }

@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace api.Internal.Postgres.Migrations
 {
-    [DbContext(typeof(RepeatyPostgresDbContext))]
-    partial class RepeatyPostgresDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(RepeatyDbContext))]
+    partial class RepeatyDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace api.Internal.Postgres.Migrations
 
             modelBuilder.Entity("PublicUserProfile", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<DateTimeOffset>("CreatedAt")

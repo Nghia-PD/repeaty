@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace api.Internal.Postgres.Migrations
 {
-    [DbContext(typeof(RepeatyPostgresDbContext))]
-    [Migration("20260413095748_InitialCreate")]
+    [DbContext(typeof(RepeatyDbContext))]
+    [Migration("20260417001711_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,8 +26,9 @@ namespace api.Internal.Postgres.Migrations
 
             modelBuilder.Entity("PublicUserProfile", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<DateTimeOffset>("CreatedAt")
