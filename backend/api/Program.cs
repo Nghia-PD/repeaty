@@ -26,7 +26,7 @@ using (var scope = app.Services.CreateScope())
 
 }
 
-// Routing
+// Routing 
 app.MapGet("/", () => "Health check ok!");
 app.MapUserEndpoint();
 app.MapUserPublicProfileEndpoint();
