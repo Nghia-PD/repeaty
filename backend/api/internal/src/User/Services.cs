@@ -15,6 +15,8 @@ public class UserService(RepeatyDbContext db)
         await db.PublicUserProfiles.AddAsync(user);
         await db.SaveChangesAsync();
 
+
+        // need to return the auth token so client can login 
         return user;
     }
 }
