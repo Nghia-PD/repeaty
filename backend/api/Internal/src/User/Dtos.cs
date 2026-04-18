@@ -7,6 +7,14 @@ public record CreateUser(
     [property: StringLength(50)]
     string Username,
 
+    [property: JsonPropertyName("email")]
+    [property: Required]
+    string Email,
+
+    [property: JsonPropertyName("password")]
+    [property: Required]
+    string Password,
+
     [property: JsonPropertyName("streak")]
     int Streak = 0
 );

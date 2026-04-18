@@ -15,14 +15,7 @@ public static class UserHandler
         }
         catch (Exception e)
         {
-            var data = new
-            {
-                error = e.GetType().Name,
-                message = e.Message,
-                stack_trace = e.StackTrace
-            };
-
-            return Results.InternalServerError(data);
+            return Results.InternalServerError(new { error = e.GetType().Name, message = e.Message, });
         }
     }
 }
