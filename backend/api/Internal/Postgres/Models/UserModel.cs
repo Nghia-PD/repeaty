@@ -1,11 +1,13 @@
 
 
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
-public class PublicUserProfile
+public class UserModel
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
+    public required string Email { get; set; }
     public required string Username { get; set; }
     public int Streak { get; set; } = 0;
 

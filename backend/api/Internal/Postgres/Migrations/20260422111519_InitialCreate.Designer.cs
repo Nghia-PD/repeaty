@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace api.Internal.Postgres.Migrations
 {
     [DbContext(typeof(RepeatyDbContext))]
-    partial class RepeatyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260422111519_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace api.Internal.Postgres.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PublicUserProfile", b =>
+            modelBuilder.Entity("UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,6 +34,11 @@ namespace api.Internal.Postgres.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<int>("Streak")
                         .HasColumnType("integer")
@@ -46,9 +54,13 @@ namespace api.Internal.Postgres.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("Id")
-                        .HasName("pk_public_user_profiles");
+                        .HasName("pk_users");
 
-                    b.ToTable("public_user_profiles", (string)null);
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_email");
+
+                    b.ToTable("users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -6,6 +6,13 @@ public static class UserEndpoints
     {
         var group = app.MapGroup("/user");
 
+        // GET
+
+        // GET all users
+        group.MapGet("/", UserHandler.GetAllUser);
+        // GET by id /{id}
+        group.MapGet("/{id}", UserHandler.GetUserById);
+
 
         // POST
 

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 public class RepeatyDbContext(DbContextOptions<RepeatyDbContext> options) : DbContext(options)
 {
-    public DbSet<PublicUserProfile> PublicUserProfiles { get; set; }
+    public DbSet<UserModel> Users { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
-        var entries = ChangeTracker.Entries<PublicUserProfile>();
+        var entries = ChangeTracker.Entries<UserModel>();
 
         foreach (var entry in entries)
         {
@@ -17,6 +17,14 @@ public class RepeatyDbContext(DbContextOptions<RepeatyDbContext> options) : DbCo
                 entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
         }
 
+
         return base.SaveChangesAsync(ct);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserModel>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
     }
 }

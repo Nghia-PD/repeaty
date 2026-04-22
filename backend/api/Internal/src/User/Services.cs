@@ -1,19 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+
 public class UserService(RepeatyDbContext db)
 {
-    public async Task<PublicUserProfile> CreateUser(CreateUser dto)
+    public async Task<UserModel?> GetById(Guid id)
     {
-        // create Auth
+        return await db.Users.FindAsync(id);
+    }
 
-        // create private profile
+    public async Task<List<UserModel>> GetAll()
+    {
+        return await db.Users.ToListAsync();
+    }
 
-        // create public profile
-        var user = new PublicUserProfile
+    public async Task<UserModel> CreateUser(CreateUser dto)
+    {
+        // check if user exist with email
+
+        // create record in User
+        var user = new UserModel
         {
+            Email = dto.Email,
             Username = dto.Username,
             Streak = dto.Streak,
         };
-        await db.PublicUserProfiles.AddAsync(user);
+        await db.Users.AddAsync(user);
         await db.SaveChangesAsync();
+
+        // create auth
 
         return user;
     }
