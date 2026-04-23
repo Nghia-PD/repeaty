@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 public class UserService(RepeatyDbContext db)
 {
@@ -14,20 +15,30 @@ public class UserService(RepeatyDbContext db)
 
     public async Task<UserModel> CreateUser(CreateUser dto)
     {
-        // check if user exist with email
-
         // create record in User
-        var user = new UserModel
+
+        try
         {
-            Email = dto.Email,
-            Username = dto.Username,
-            Streak = dto.Streak,
-        };
-        await db.Users.AddAsync(user);
-        await db.SaveChangesAsync();
+            var user = new UserModel
+            {
+                Email = dto.Email,
+                Username = dto.Username,
+                Streak = dto.Streak,
+            };
+            await db.Users.AddAsync(user);
+            await db.SaveChangesAsync();
+            return user;
+
+        }
+        catch (DbUpdateException e) when (e.InnerException is PostgresException pgEx && pgEx.SqlState == PostgresErrorCodes.UniqueViolation)
+        {
+            throw new CustomExceptions.ConflictException("user/email-taken", "Email already exists");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
 
         // create auth
-
-        return user;
     }
 }
