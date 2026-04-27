@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 public static class UserEndpoints
 {
     public static void MapUserEndpoint(this WebApplication app)
@@ -8,7 +6,7 @@ public static class UserEndpoints
 
         // GET
 
-        // GET all users
+        // GET all /
         group.MapGet("/", UserHandler.GetAllUser);
         // GET by id /{id}
         group.MapGet("/{id}", UserHandler.GetUserById);
@@ -16,7 +14,13 @@ public static class UserEndpoints
 
         // POST
 
-        // POST create user
+        // POST create user /
         group.MapPost("/", UserHandler.CreateUser);
+
+
+        // DELETE
+
+        // DELETE by id /{id}
+        group.MapDelete("/{id}", UserHandler.DeleteUser);
     }
 }

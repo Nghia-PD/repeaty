@@ -1,11 +1,12 @@
+using FirebaseAdmin.Auth;
+
 public static class UserHandler
 {
-    public static async Task<IResult> GetUserById(string id, UserService service)
+    public static async Task<IResult> GetUserById(Guid id, UserService service)
     {
         try
         {
-            var guid = Guid.Parse(id);
-            var res = await service.GetById(guid);
+            var res = await service.GetById(id);
             return res is null ? Results.NotFound() : Results.Ok(res);
         }
         catch (FormatException e)
@@ -45,11 +46,24 @@ public static class UserHandler
             var dto = await Json.Read<CreateUser>(req);
             var res = await service.CreateUser(dto);
 
-            return Results.Created($"/user-public-profile/{res.Id}", res);
+            return Results.Created($"/user/{res.Id}", res);
         }
         catch (CustomExceptions.BadRequestBodyException e)
         {
             return Results.BadRequest(new { message = e.Message });
+        }
+        catch (Exception e)
+        {
+            return Results.InternalServerError(new { error = e.GetType().Name, message = e.Message, });
+        }
+    }
+
+    public static async Task<IResult> DeleteUser(Guid id, UserService service)
+    {
+        try
+        {
+            await service.DeleteUser(id);
+            return Results.NoContent();
         }
         catch (Exception e)
         {

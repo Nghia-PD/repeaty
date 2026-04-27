@@ -1,7 +1,15 @@
 
 // Connect to postgres
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 
+// Firebase
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromAccessToken("test"),
+    ProjectId = "repeaty-io"
+});
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextPool<RepeatyDbContext>(opt =>
